@@ -1,6 +1,13 @@
-p {
-    height: 100px;
-    width: 100px;
-    background-color: red;
-    border: 1px solid blue;
+* {
+    outline: 1px solid red;
+}
+
+
+.extension-container {
+    height: 300px;
+    width: 300px;
+}
+
+.register-note-button {
+
 }

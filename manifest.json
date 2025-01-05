@@ -4,8 +4,8 @@
     "version": "1.0.0",
     "description": "Remind you things you noted on websites",
     "permissions" : ["activeTab"],
-    "icons": {
-        "default_popup" : "basePopup.html",
+    "action": {
+        "default_popup" : "base-popup.html",
         "default_icon" : {
             "16": "browser-notes 16.png",
             "48": "browser-notes.png",
