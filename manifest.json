@@ -1,15 +1,20 @@
 {
-    "manifest_version": 3,
-    "name": "Browser Notes",
-    "version": "1.0.0",
-    "description": "Remind you things you noted on websites",
-    "permissions" : ["activeTab"],
-    "action": {
-        "default_popup" : "base-popup.html",
-        "default_icon" : {
-            "16": "browser-notes 16.png",
-            "48": "browser-notes.png",
-            "128": "browser-notes 128.png"
-        }
-    }
+  "manifest_version": 3,
+  "name": "Notes pour sites web",
+  "version": "1.0",
+  "description": "Ajoutez des notes à vos sites favoris et soyez notifié lorsque vous les visitez.",
+  "permissions": ["storage", "tabs"],
+  "host_permissions" : ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "base-popup.html",
+    "default_icon": "browser-notes.png"
+  },
+  "icons": {
+    "16": "browser-notes 16.png",
+    "48": "browser-notes.png",
+    "128": "browser-notes 128.png"
   }
+}
