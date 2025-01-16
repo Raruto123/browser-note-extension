@@ -18,13 +18,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Notes pour sites</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Notes Extension</title>
+  <link rel="stylesheet" href="base-popup.css">
 </head>
 <body>
   <h1>Ajouter une note</h1>
   <div>
-    <label for="note">Note :</label>
-    <textarea id="note" placeholder="Ajoutez une note ici"></textarea>
+    <label for="note-value">Note :</label>
+    <input type="text" name="note-value" id="note-value">
   </div>
   <button id="save-note">Enregistrer</button>
   <h2>Sites enregistrés</h2>

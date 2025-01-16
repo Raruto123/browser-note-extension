@@ -55,4 +55,21 @@
 //   // Charger les sites enregistrés au démarrage
 //   afficherSites();
 
-//Récupérer l'URL actuelle
+
+
+
+// function logTabs(tabs) {
+//   // tabs[0].url requires the `tabs` permission or a matching host permission.
+//   console.log(tabs[0].url);
+//   document.getElementsByTagName("h2")[0].innerText=tabs[0].url;
+// }
+
+// function onError(error) {
+//   console.error(`Error: ${error}`);
+// }
+
+// chrome.tabs
+//   .query({ currentWindow: true, active: true })
+//   .then(logTabs, onError);
+
+//Récupérer l'URL actuelle et la note
