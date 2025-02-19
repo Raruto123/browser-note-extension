@@ -5,9 +5,7 @@
   "description": "Ajoutez des notes à vos sites favoris et soyez notifié lorsque vous les visitez.",
   "permissions": ["storage", "tabs"],
   "host_permissions" : ["<all_urls>"],
-  "background": {
-    "service_worker": "background.js"
-  },
+  "devtools_page" : "base-popup.html",
   "action": {
     "default_popup": "base-popup.html",
     "default_icon": "browser-notes.png"
