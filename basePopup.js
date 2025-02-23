@@ -2,7 +2,6 @@ let notes = {};
 const siteList = document.getElementById("site-list");
 const textField = document.getElementById("note-value");
 
-
 async function getUrl() {
   const actualTab = await chrome.tabs.query({
     currentWindow: true,
@@ -11,80 +10,46 @@ async function getUrl() {
 
   const url = actualTab[0].url;
 
-  return url
-  
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  chrome.storage.local.get(["notes"], (data) => {
-    const notes = data.notes || {};
-
-
-    for (const [url, note] of Object.entries(notes)) {
-        let listItem = document.createElement("li");
-        listItem.textContent = `${url} : ${note}`;
-        siteList.appendChild(listItem);
-    }
-});
-})
-
-
-document.getElementById("save-note").addEventListener("click", () => {
-
-
-  // console.log(`%c🎨 ⍨ getUrl`, "Your_CSS_Goes_Here", getUrl().then((url) => {
-  // console.log(`%c🎨 ⍨ url`, "Your_CSS_Goes_Here", url);
-    
-  // }));
-
-
-  const noteValue = textField.value;
-
-  //créer la base de données
-  if (getUrl() && noteValue.trim() !== "") {
-    chrome.storage.local.set({notes}).then(() => {
-      console.log(`%c🎨 ⍨ base de données crées`, "Your_CSS_Goes_Here");
-      loadAndShowNotes(getUrl().then((url) => {
-        return url
-      }), noteValue);
-    });
-  } else {
-    alert("insérer des valeurs valides!")
-  }
-});
-
-
-function loadAndShowNotes(url, notevalue) {
-  chrome.storage.local.get("notes").then((data) => {
-    const note = data.notes;
-    note[url] = notevalue;
-    console.log(`%c🎨 ⍨ note`, "color:yellowgreen; font-weight:bold", note);
-
-
-    const element = document.createElement("li");
-    if (note) {
-      for(const url in note) {
-        element.textContent=`${url} : ${note[url]}`;
-        console.log(`%c🎨 ⍨ element`, "color:yellow; font-weight:bold", element);
-        siteList.appendChild(element);
-      }
-    }
-  })
+  return url;
 };
 
-// loadNotes();
+document.addEventListener("DOMContentLoaded", () => {
+  loadAndShowNotes();
+});
 
-// function showNotes() {
-//   chrome.storage.local.get("notes").then((data) => {
-//     const note = data.notes;
-//     const element = document.createElement("li");
+function loadAndShowNotes() {
+  siteList.innerHTML = ""; // Nettoyer la liste avant d'ajouter les éléments
+  chrome.storage.local.get("notes", (data) => {
+    const notes = data.notes || {}; // Assurer que notes existe
 
-//     if (note) {
-//       for(const url in note) {
-//         element.textContent=`${url} : ${note[url]}`;
-//         console.log(`%c🎨 ⍨ element`, "color:yellow; font-weight:bold", element);
-//       }
-//     }
-//   })
-// }
+    console.log(`%c🎨 ⍨ Notes chargées`, "color:yellowgreen; font-weight:bold", notes);
 
+    for (const url in notes) {
+      const element = document.createElement("li");
+      element.textContent = `${url} : ${notes[url]}`;
+      siteList.appendChild(element);
+    }
+  });
+}
+
+
+document.getElementById("save-note").addEventListener("click", async () => {
+  const urlString = await getUrl();
+  const noteValue = textField.value;
+
+  if (urlString && noteValue.trim() !== "") {
+    // Récupérer les notes existantes avant d'ajouter la nouvelle
+    chrome.storage.local.get("notes", (data) => {
+      let notes = data.notes || {}; // Si notes n'existe pas encore, on crée un objet vide
+      notes[urlString] = noteValue; // Ajouter la nouvelle note
+      
+      // Sauvegarde de l'objet mis à jour
+      chrome.storage.local.set({ notes }, () => {
+        console.log(`%c🎨 ⍨ note sauvegardée`, "color:yellowgreen; font-weight:bold", notes);
+        loadAndShowNotes();
+      });
+    });
+  } else {
+    alert("Insérez des valeurs valides!");
+  }
+});
