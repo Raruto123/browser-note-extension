@@ -1,14 +1,18 @@
-const siteList = document.getElementById("site-list");
+const siteList = document.getElementById("site-list") || null;
+const dialog = document.getElementById("editNoteModal");
+const closeDialog = document.getElementById("closeModal");
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadAndShowNotes();
 });
 
 export function loadAndShowNotes() {
-  // siteList.innerHTML = ""; // Nettoyer la liste avant d'ajouter les éléments
+  if (!siteList) return; // Si `siteList` est null, on arrête la fonction.
+
   chrome.storage.local.get("notes", (data) => {
     const notes = data.notes || {}; // Assurer que notes existe
-
+    siteList.innerHTML = ""; //Permet d'éviter les doublons
     console.log(
       `%c🎨 ⍨ Notes chargées`,
       "color:yellowgreen; font-weight:bold",
@@ -16,15 +20,6 @@ export function loadAndShowNotes() {
     );
 
     for (const url in notes) {
-      // Vérifie si siteList existe avant d'essayer d'ajouter des éléments
-      //le problème est au niveau de basepopup.html vu que y'a pas sitelist
-      //là-bas quand je repasse sur la page ça déclence cette erreur
-      if (!siteList) {
-        console.warn(
-          "⚠️ `siteList` est null, impossible d'ajouter des notes !"
-        );
-        return;
-      }
       //la liste des notes
       const element = document.createElement("li");
       element.textContent = `${url} : ${notes[url]}`;
@@ -35,8 +30,17 @@ export function loadAndShowNotes() {
       deleteButton.type = "button";
       deleteButton.dataset.url = "";
 
+      //bouton modifier
+      const editButton = document.createElement("button");
+      editButton.textContent = "Modifier";
+      editButton.type = "button";
+
+
       //je colle le bouton supprimer à la list element
       element.appendChild(deleteButton);
+
+      //je colle le bouton modifier à la list element
+      element.appendChild(editButton);
 
       //je colle le element au siteList
       siteList.appendChild(element);
@@ -81,6 +85,14 @@ export function loadAndShowNotes() {
           chrome.storage.local.set({ notes }, loadAndShowNotes);
           siteList.removeChild(element);
         });
+        //bouton pour modifier une note
+        editButton.addEventListener("click", () => {
+          dialog.show();
+          closeDialog.addEventListener("click", () => {
+            dialog.close();
+            dialog.returnValue;
+          })
+        })
     }
   });
 }

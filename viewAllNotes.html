@@ -11,6 +11,16 @@
     <button id="delete-all-notes">Supprimer toutes les notes</button>
     <ul id="site-list"></ul>
     <a href="base-popup.html" target="_self" rel="noopener noreferrer">Retour</a>
+    <dialog id="editNoteModal">
+        <form>
+            <label for="noteEdited">Écris ta nouvelle note</label>
+            <input type="text" name="noteEdited" id="noteEdited">
+            <menu type="context">
+                <button type="button" value="cancel" id="closeModal">Annuler</button>
+                <button type="button">Sauvegarder</button>
+            </menu>
+        </form>
+    </dialog>
     <script src="viewAllNotes.mjs" type="module"></script>
 </body>
 </html>

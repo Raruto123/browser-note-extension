@@ -8,11 +8,11 @@
   "devtools_page" : "base-popup.html",
   "action": {
     "default_popup": "base-popup.html",
-    "default_icon": "browser-notes.png"
+    "default_icon": "images/browser-notes.png"
   },
   "icons": {
-    "16": "browser-notes 16.png",
-    "48": "browser-notes.png",
-    "128": "browser-notes 128.png"
+    "16": "images/browser-notes 16.png",
+    "48": "images/browser-notes.png",
+    "128": "images/browser-notes 128.png"
   }
 }
